@@ -1,0 +1,42 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>Verified College Candidates</center></h1>
+        
+        <table border="1"align="center">
+            <tr>
+                <td>#</td>
+                <td>Student</td>
+                <td>Photo</td>
+                <td>Election</td>
+                <td>Gender</td>
+                <td>Nomination submission</td>
+                <td>Position</td>
+                <td>Action</td>
+            </tr>
+            {% for i in candidate %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.candidate.Student_name}}</td>
+                <td><img src="{{i.candidate.Student_photo}}" width="150" height="150" alt=""></td>
+                <td>{{i.candidate.election_for_date}}</td>
+                <td>{{i.candidate.Gender}}</td>
+                <td>{{i.candidate.election_nomination_ldate}}</td>
+                <td>{{i.candidate.election_position}}</td>
+                <td><a href="{% url 'webteacher:Rejected_college_candidate' i.id %}">Reject</a></td>
+            </tr>
+            {% endfor %}
+            </table>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

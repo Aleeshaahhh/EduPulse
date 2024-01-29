@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Election Date </td>
+            <td><input type="date"name="txt_electdate"placeholder="Enter Election Date" value="{{election.election_date}}" required></td>
+            </tr>
+            <tr>
+                <td>Nomination Last Date</td>
+                <td><input type="date" name="txt_nldate" id="" required></td>
+            </tr>
+            <tr>
+                <td>Nomination cancel Date</td>
+                <td><input type="date" name="txt_ncdate" id="" required></td>
+            </tr>
+            <tr>
+            <td>Election Details </td>
+            <td><textarea name="txt_electdetails"id="" cols="15" rows="5"placeholder="Enter Election Details" value="{{election.election_details}}" required></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnadd"value="Add">
+                 </td>
+               </tr>
+        </table>
+    </form>
+    <br><br>
+    <table border="1"align="center">
+        <tr>
+            <td>#</td>
+            <td>Date</td>
+            <td>Election For Date</td>
+            <td>Nomination Last Date</td>
+            <td>Nomination cancel Date</td>
+            <td>ElectionDetails</td>
+            <td>Action</td>
+        </tr>
+        {% for i in elect %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.elect.election_date}}</td>
+            <td>{{i.elect.election_nomination_ldate}}</td>
+            <td>{{i.elect.election_nomination_cdate}}</td>
+            <td>{{i.elect.election_for_date}}</td>
+            <td>{{i.elect.election_details}}</td>
+            <td><a href="{% url 'webadmin:delete_election' i.id %}">Delete</a>
+                <a href="{% url 'webadmin:edit_election' i.id %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </table>  
+</body>
+</html>

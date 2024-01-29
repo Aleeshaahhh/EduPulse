@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Name </td>
+            <td><input type="text"name="txt_name" required="Enter Name" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"></td>
+            </tr>
+            <tr>
+                <td>Email </td>
+            <td><input type="email"name="txt_email" id="txt_email" placeholder="Enter Email" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+            <td><input type="text"name="txt_contact"placeholder="Enter Contact" pattern="[7-9]{1}[0-9]{9}" 
+                title="Phone number with 7-9 and remaing 9 digit with 0-9" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><textarea name="txtaddress" id="" cols="10" rows="5" required></textarea></td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input type="file"name="txt_photo" required></td>
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td><select name="sel_dept" id="sel_dept" required>
+                            <option>--select--</option>
+                            {% for i in depdata %}
+                            <option value="{{i.id}}">{{i.dept.department_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Course</td>
+                    <td><select name="sel_course" id="sel_course" required>
+                            <option>--select--</option>
+                        </select>
+                    </td>
+                </tr>
+                <td>Year</td>
+                <td><select name="year" required>
+                <option>--select--</option>
+                {% for i in yrdata %}
+                <option value="{{i.id}}">{{i.year.year_name}}</option>
+                {% endfor %}
+                </select>
+                </td>
+                </tr>
+                <tr>
+                <tr>
+                <td>Password </td>
+            <td><input type="password"name="txt_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"placeholder="Enter Password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnregister"value="Register">
+                 </td>
+               </tr>
+            </table>
+        </form>
+        {% if msg %}
+        <script>
+            alert("{{msg}}")
+        </script>
+        {% endif %}
+        <br><br>
+        <table border="1"align="center">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Contact</td>
+                <td>Photo</td>
+                <td>Course</td>
+                <td>Department</td>
+                <td>Year</td>
+                <td>Action</td>
+            </tr>
+            {% for i in tchrdata %}
+            <tr>
+                <td>{{i.teacher.teacher_name}}</td>
+                <td>{{i.teacher.teacher_email}}</td>
+                <td>{{i.teacher.teacher_contact}}</td>
+                <td><img src="{{i.teacher.teacher_photo}}" width="150" height="150" alt=""></td>
+                <td>{{i.course.course_name}}</td>
+                <td>{{i.department.department_name}}</td>
+                <td>{{i.year.year_name}}</td>
+                <td><a href="{% url 'webadmin:delete_student' i.id %}">Delete</a>
+            </tr>
+            {% endfor %}
+            {% for i in teacherdata %}
+            <tr>
+                <td><a href="{% url 'webadmin:Teacher' %}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_dept").change(function () {
+        var depid = $(this).val();
+        var ur = "{% url 'webadmin:ajaxcourse' %}"
+        $.ajax({
+            url: ur,
+            data: { depid: depid, },
+            success: function (data) {
+                $("#sel_course").html(data);
+            },
+        });
+    });
+</script>
+<script>
+    function validateForm() {
+      var email = document.getElementById('txt_email').value;
+      var pattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      if (!pattern.test(email)) {
+        alert('Please enter a valid Gmail address.');
+        return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+    }
+      </script>

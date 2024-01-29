@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year
+
+    </title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Year</td>
+            <td><input type="text"name="txt_year"placeholder="Enter Year" value="{{dept.department_name"}} required></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnsave"value="Save">
+                    <input type="reset"name="btncancel"value="cancel">
+                 </td>
+               </tr>
+            </table>
+        </form>
+        <br><br>
+        <table border="1"align="center">
+            <tr>
+                <td>Slno</td>
+                <td>Year</td>
+                <td>Action</td>
+            </tr>
+            {% for i in yrdata %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.year.year_name}}</td>
+                <td>{{Action}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+</body>
+</html>

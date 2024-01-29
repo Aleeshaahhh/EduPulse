@@ -1,0 +1,136 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1><center>Student Registration</center></h1><br><br>
+    <div id="tab">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <table border="1" align="center">
+            <tr>
+                <td>Name </td>
+                <td><input required type="text" name="txt_name" placeholder="Enter Name" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"></td>
+            </tr>
+            <tr>
+                <td>Email </td>
+                <td><input required type="email" name="txt_email" id="txt_email" placeholder="Enter Email"></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text" required name="txt_contact" placeholder="Enter Contact" pattern="[7-9]{1}[0-9]{9}" 
+                    title="Phone number with 7-9 and remaing 9 digit with 0-9"/></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" required name="rdo_gender" value="Male" />Male
+              <input type="radio" name="rdo_gender" value="Female" />Female
+                </td>
+            </tr>
+            <tr>
+                <td>Proof</td>
+                <td><input type="file" required name="txt_proof"></td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input type="file" required name="txt_photo"></td>
+            </tr>
+            <tr>
+                <td>Department</td>
+                <td><select name="sel_dept" id="sel_dept" required>
+                        <option>--select--</option>
+                        {% for i in department %}
+                        <option value="{{i.id}}">{{i.dept.department_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Course</td>
+                <td><select name="sel_course" id="sel_course" required>
+                        <option>--select--</option>
+                    </select>
+                </td>
+            </tr>
+            <td>Year</td>
+            <td><select name="year" required>
+                    <option>--select--</option>
+                    {% for i in year %}
+                    <option value="{{i.id}}">{{i.year.year_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            </tr>
+            <tr>
+                <td>Address </td>
+                <td><textarea name="txt_address" required placeholder="Enter Address"></textarea></td>
+            </tr>
+            <tr>
+                <td>AdmissionNo </td>
+                <td><input type="text" name="txt_admino" required placeholder="Enter Admission Number"></td>
+            </tr>
+            <tr>
+                <td>Password </td>
+                <td><input type="text" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required name="txt_pass" placeholder="Enter Password"  /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnadd" value="Register" >
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+    {% if msg %}
+        <script>
+            alert("{{msg}}")
+        </script>
+        {% endif %}
+
+        {% for i in studentdata %}
+        <tr>
+            <td><a href="{% url 'webguest:StudentRegister' %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+
+        
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_dept").change(function () {
+        var depid = $(this).val();
+        var ur = "{% url 'webguest:ajaxcourse' %}"
+        $.ajax({
+            url: ur,
+            data: { depid: depid, },
+            success: function (data) {
+                $("#sel_course").html(data);
+            },
+        });
+    });
+</script>
+<script>
+    function validateForm() {
+      var email = document.getElementById('txt_email').value;
+      var pattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      if (!pattern.test(email)) {
+        alert('Please enter a valid Gmail address.');
+        return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+    }
+      </script>
+<br><br><br>
+{% endblock content %}

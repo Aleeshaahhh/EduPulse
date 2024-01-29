@@ -1,0 +1,30 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>Feedback</center></h1>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <td>Feedback Content </td>
+            <td><input type="text"name="txt_feedback"placeholder="Enter Feedback Content" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnsend"value="Send">
+                 </td>
+               </tr>
+        </table>
+    </form>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

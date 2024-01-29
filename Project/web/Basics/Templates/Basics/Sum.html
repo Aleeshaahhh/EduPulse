@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>number 1</td>
+            <td><input type="text"name="txt_number1"placeholder="enter number"></td>
+            </tr>
+            <tr>
+            <td>number 2</td>
+           <td><input type="text"name="txt_number2"placeholder="enter number"></td>
+           </tr>
+           <tr>
+            <td colspan="2"align="center">
+                <input type="submit"name="btnsubmit"value="sum">
+                <input type="reset"name="btnsubmit"value="cancel">
+             </td>
+           </tr>
+        </table>
+    </form>
+    Sum={{result}}
+    
+</body>
+</html>

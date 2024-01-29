@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Name </td>
+            <td><input type="text"name="txt_name"placeholder="Enter Name"title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$" required></td>
+            </tr>
+            <tr>
+                <td>Email </td>
+            <td><input type="email"name="txt_email" id="txt_email" placeholder="Enter Email" required></td>
+            </tr>
+            <tr>
+                <td>Password </td>
+            <td><input type="password"name="txt_password"pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"placeholder="Enter Password" " required></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnregister"value="Register">
+                 </td>
+               </tr>
+            </table>
+        </form>
+       
+</body>
+</html>
+<script>
+    function validateForm() {
+      var email = document.getElementById('txt_email').value;
+      var pattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      if (!pattern.test(email)) {
+        alert('Please enter a valid Gmail address.');
+        return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+    }
+      </script>

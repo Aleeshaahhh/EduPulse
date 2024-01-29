@@ -1,0 +1,48 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>Accepted Students</center></h1>
+        
+        <table border="1"align="center">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Contact</td>
+                <td>Proof</td>
+                <td>Photo</td>
+                <td>Course</td>
+                <td>Year</td>
+                <td>Address</td>
+                <td>AdmissionNo</td>
+                <td>Department</td>
+                <td>Action</td>
+            </tr>
+            {% for i in student %}
+            <tr>
+                <td>{{i.student.Student_name}}</td>
+                <td>{{i.student.Student_email}}</td>
+                <td>{{i.student.Student_contact}}</td>
+                <td><img src="{{i.student.Student_proof}}" width="150" height="150" alt=""></td>
+                <td><img src="{{i.student.Student_photo}}" width="150" height="150" alt=""></td>
+                <td>{{i.course.course_name}}</td>
+                <td>{{i.year.year_name}}</td>
+                <td>{{i.student.Student_address}}</td>
+                <td>{{i.student.Student_admissionno}}</td>
+                <td>{{i.department.department_name}}</td>
+                <td><a href="{% url 'webteacher:reject_student' i.id %}">Reject</a></td>
+            </tr>
+            {% endfor %}
+            </table>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>View Class Candidates</center></h1>
+    <table border="1"align="center">
+        <tr>
+            <td>#</td>
+            <td>Student</td>
+            <td>Photo</td>
+            <td>Election</td>
+            <td>Submission Date</td>
+            <td>Gender</td>
+        </tr>
+        {% for i in candidate %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.student.Student_name}}</td>
+            <td><img src="{{i.student.Student_photo}}" width="100" height="100" alt=""></td>
+            <td>{{i.election.election_details}}</td>
+            <td>{{i.candidate.submission_date}}</td>
+            <td>{{i.candidate.gender}}</td>
+              
+        </tr>
+        {% endfor %}
+    </table>    
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Complaint Reply </td>
+            <td><input type="text"name="txt_name"placeholder="Enter Complaint Reply" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"align="center">
+                    <input type="submit"name="btnregister"value="Send">
+                 </td>
+               </tr>
+            </table>
+        </form>
+       
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>My Profile</center></h1>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>Name </td>
+            <td>{{teacher.teacher_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact </td>
+            <td>{{teacher.teacher_contact}}</td>
+            </tr>
+            <tr>
+                <td>Email </td>
+            <td>{{teacher.teacher_email}}</td>
+            </tr>
+            <tr>
+                <td>Address </td>
+            <td>{{teacher.teacher_address}}</td>
+            </tr>
+        </tr>
+        <tr>
+            <td colspan="2"align="center">
+                <a href="{% url 'webteacher:Editprofile' %}">Edit Profile</a>
+                <a href="{% url 'webteacher:changepass' %}">Change Password</a>
+             </td>
+           </tr>
+        </table>
+    </form>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

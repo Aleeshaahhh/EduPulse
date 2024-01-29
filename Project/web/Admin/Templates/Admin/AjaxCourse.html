@@ -1,0 +1,6 @@
+<select name="sel_course" id="sel_course">
+    <option value="">--select--</option>
+    {% for i in course %}
+    <option value="{{i.id}}">{{i.course.course_name}}</option>
+    {% endfor %}
+</select>

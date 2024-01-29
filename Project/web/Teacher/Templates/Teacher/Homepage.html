@@ -1,0 +1,22 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>HomePage</center></h1>
+    <a href="{% url 'webteacher:MyProfile' %}">My Profile</a><br>
+    <a href="{% url 'webteacher:NewStudent' %}">New Student</a><br>
+    <a href="{% url 'webteacher:accepted_student' %}">Accepted Student</a><br>
+    <a href="{% url 'webteacher:rejected_student' %}">Rejected Student</a><br>
+    <a href="{% url 'webteacher:ViewClasscandidate' %}">View Class Application</a>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marksheet</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token  %}
+        <table border="1" align="center">
+            <tr>
+                <td>name </td>
+            <td><input type="text"name="txt_name"placeholder="enter name"></td>
+            </tr>
+            <tr>
+            <td>Department</td>
+           <td><select name="dept">
+            <option>--select--</option>
+            <option value="CS">computer science</option>
+            <option value="BS">basic science</option>
+            </select>
+           </td>
+           </tr>
+           <tr>
+            <td>Year</td>
+           <td><input type="checkbox"name="txt_year"value="Year1">year1
+               <input type="checkbox"name="txt_year"value="Year2">year2
+               <input type="checkbox"name="txt_year"value="Year3">year3</td>
+           </tr>
+           <tr>
+            <td>Mark 1</td>
+           <td><input type="text"name="txt_number1"placeholder="enter mark1"></td>
+           </tr>
+           <tr>
+            <td>Mark 2</td>
+           <td><input type="text"name="txt_number2"placeholder="enter mark2"></td>
+           </tr>
+           <tr>
+            <td>Mark 3</td>
+           <td><input type="text"name="txt_number3"placeholder="enter mark3"></td>
+           </tr>
+           <tr>
+            <td colspan="2"align="center">
+                <input type="submit"name="btnsave"value="save">
+                <input type="reset"name="btncancel"value="cancel">
+             </td>
+           </tr>
+        </table>
+    </form>
+   Name={{Name}}
+   Department={{Department}}
+   Year={{Year}}
+   Mark1={{Mark1}}
+   Mark2={{Mark2}}
+   Mark3={{Mark3}}
+   TotalMark={{TotalMark}}
+   Average={{Average}}
+   grade={{grade}}
+</body>
+</html>

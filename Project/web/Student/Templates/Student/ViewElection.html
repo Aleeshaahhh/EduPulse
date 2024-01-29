@@ -1,0 +1,36 @@
+{% extends 'Guest/Header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><center>View Election</center></h1>
+    <table border="1"align="center">
+        <tr>
+            <td>#</td>
+            <td>Date</td>
+            <td>Election For Date</td>
+            <td>ElectionDetails</td>
+            <td>Action</td>
+        </tr>
+        {% for i in elect %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.elect.election_date}}</td>
+            <td>{{i.elect.election_for_date}}</td>
+            <td>{{i.elect.election_details}}</td>
+            <td><a href="{% url 'webstudent:apply_election' i.id %}">Apply</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>  
+    
+</body>
+</html>
+<br><br><br>
+{% endblock content %}
