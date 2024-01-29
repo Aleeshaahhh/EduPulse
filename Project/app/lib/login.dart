@@ -4,7 +4,7 @@ import 'package:edupulse/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:edupulse/dashboard.dart';Hai
+// import 'package:edupulse/dashboard.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
