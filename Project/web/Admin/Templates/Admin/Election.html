@@ -10,7 +10,7 @@
         {% csrf_token  %}
         <table border="1" align="center">
             <tr>
-                <td>Election Date </td>
+                <td>Election For Date </td>
             <td><input type="date"name="txt_electdate"placeholder="Enter Election Date" value="{{election.election_date}}" required></td>
             </tr>
             <tr>
@@ -47,12 +47,17 @@
         <tr>
             <td>{{forloop.counter}}</td>
             <td>{{i.elect.election_date}}</td>
+            <td>{{i.elect.election_for_date}}</td>
             <td>{{i.elect.election_nomination_ldate}}</td>
             <td>{{i.elect.election_nomination_cdate}}</td>
-            <td>{{i.elect.election_for_date}}</td>
             <td>{{i.elect.election_details}}</td>
             <td><a href="{% url 'webadmin:delete_election' i.id %}">Delete</a>
-                <a href="{% url 'webadmin:edit_election' i.id %}">Edit</a></td>
+                {% if i.elect.election_status == 0 %}    
+                <a href="{% url 'webadmin:edit_election' i.id %}">Active</a>
+                {% else %}
+                <a href="{% url 'webadmin:deactive' i.id %}">De-Active</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>  

@@ -25,6 +25,10 @@ urlpatterns = [
     path('View_Reply/',views.View_Reply,name="View_Reply"),
     path('View_Collegepolling/',views.College_Polling,name="View_Collegepolling"),
     path('View_Classpolling/',views.Class_Polling,name="View_ClassPolling"),
+    path('accept_class_candidate/<str:id>',views.accept_class_candidate,name="accept_class_candidate"),
+    path('reject_class_candidate/<str:id>',views.reject_class_candidate,name="reject_class_candidate"),
+    path('verifivote/',views.verifivote,name="verifivote"),
+    path('verifing/<str:id>',views.verifing,name="verifing"),
 
 
 

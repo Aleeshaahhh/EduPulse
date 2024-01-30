@@ -10,8 +10,31 @@
     <title>Document</title>
 </head>
 <body>
-    <h1><center>HomePage</center></h1>
+    {% if winner %}
+    <marquee behavior="" direction="">
+        {% for i in winner %}
+        <span style="color: red; font-size: 50px;" >Winner {{i.winner.Student_name}}</span>
+        {% endfor %}
+    </marquee>
+    {% endif %}
+    <h1><center>HomePage</center></h1> <br>
     <a href="{% url 'webstudent:MyProfile' %}">My Profile</a>
+    <a href="{% url 'webstudent:ViewElection' %}">View Election</a>
+    {% if status == 1 %}
+        {% if flag > 0 %}
+        {% else %}
+        <a href="{% url 'webstudent:addclasspolling' %}">Vote</a>
+        {% endif %}
+    {% endif %}
+
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'webstudent:Homepage' %}"
+    </script>
+    {% endif %}
+    <a href="{% url 'webstudent:viewresult' %}">Result</a>
+
 </body>
 </html>
 <br><br><br>

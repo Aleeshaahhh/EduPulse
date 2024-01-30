@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>#</td>
+            <td>Candidates</td>
+            <td>Action</td>
+        </tr>
+        {% for s in std %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{s.student.Student_name}}</td>
+            <td><a href="{% url 'webstudent:vote' s.id %}">Vote</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

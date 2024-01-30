@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token  %}
+        {% csrf_token %}
         <table border="1" align="center">
             <tr>
                 <td>Date </td>
@@ -15,45 +17,46 @@
             </tr>
             <tr>
                 <td>Election Details </td>
-            <td><input type="text"name="txt_electiondetails"placeholder="Enter Election Details" required></td>
+                <td><input type="text" name="txt_electiondetails" placeholder="Enter Election Details" required></td>
             </tr>
             <tr>
                 <td>Teacher</td>
                 <td><select name="teacher" required>
-                <option>--select--</option>
-                {% for i in teacher_name %}
-                <option value="{{i.id}}">{{i.assign.teacher_name}}</option>
-                {% endfor %}
-                </select>
+                        <option>--select--</option>
+                        {% for i in teacher_name %}
+                        <option value="{{i.id}}">{{i.assign.teacher_name}}</option>
+                        {% endfor %}
+                    </select>
                 </td>
-                </tr>
-            <tr>
-                <td colspan="2"align="center">
-                    <input type="submit"name="btnassign"value="Assign">
-                 </td>
-               </tr>
-            </table>
-        </form>
-        {% if msg %}
-        <script>
-            alert("{{msg}}")
-        </script>
-        {% endif %}
-        <br><br>
-        <table border="1"align="center">
-            <tr>
-                <td>Date</td>
-                <td>Election Details</td>
-                <td>Teacher</td>
-                <td>Action</td>
             </tr>
-            {% for i in assigndata %}
             <tr>
-                <td>{{i.assign.date}}</td>
-                <td>{{i.assign.election_details}}</td>
-                <td>{{i.assign.teacher_name}}</td>
-            </tr>assign
-            {% endfor %}
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnassign" value="Assign">
+                </td>
+            </tr>
         </table>
+    </form>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+    </script>
+    {% endif %}
+    <br><br>
+    <table border="1" align="center">
+        <tr>
+            <td>Date</td>
+            <td>Election Details</td>
+            <td>Teacher</td>
+            <td>Action</td>
+        </tr>
+        {% for i in assigndata %}
+        <tr>
+            <td>{{i.assign.date}}</td>
+            <td>{{i.assign.election_details}}</td>
+            <td>{{i.assign.teacher_name}}</td>
+        </tr>assign
+        {% endfor %}
+    </table>
 </body>
+
 </html>

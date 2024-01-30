@@ -42,18 +42,19 @@
                 </tr>
                 <tr>
                     <td>Course</td>
-                    <td><select name="sel_course" id="sel_course" required>
+                    <td><select name="sel_course" id="sel_course" onchange="checkTeacher()" required>
                             <option>--select--</option>
                         </select>
                     </td>
                 </tr>
                 <td>Year</td>
-                <td><select name="year" required>
+                <td><select name="year" id="year" onchange="checkTeacher()" required>
                 <option>--select--</option>
                 {% for i in yrdata %}
                 <option value="{{i.id}}">{{i.year.year_name}}</option>
                 {% endfor %}
                 </select>
+                <span id="result" style="color: red;"></span>
                 </td>
                 </tr>
                 <tr>
@@ -63,7 +64,7 @@
             </tr>
             <tr>
                 <td colspan="2"align="center">
-                    <input type="submit"name="btnregister"value="Register">
+                    <span id="btn-data"><input type="submit"name="btnregister"value="Register"></span>
                  </td>
                </tr>
             </table>
@@ -118,6 +119,29 @@
             },
         });
     });
+
+    function checkTeacher() {
+        var cid = document.getElementById("sel_course").value
+        var yid = document.getElementById("year").value
+        var ur = "{% url 'webadmin:ajaxteacher' %}"
+        $.ajax({
+            url: ur,
+            data: { cid: cid,yid: yid },
+            success: function (data) {
+                // $("#result").html(data);
+                if (data != "")
+                {
+                    document.getElementById("result").innerHTML = data
+                    document.getElementById("btn-data").style.display = "none"
+                }
+                else
+                {
+                    document.getElementById("result").innerHTML = ""
+                    document.getElementById("btn-data").style.display = "block"
+                }
+            },
+        });
+    }
 </script>
 <script>
     function validateForm() {

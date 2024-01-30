@@ -12,4 +12,8 @@ urlpatterns = [
     path('changepass/',views.changepass,name="changepass"),
     path('ViewElection/',views.ViewElection,name="ViewElection"),
     path('apply_election/<str:id>',views.apply_election,name="apply_election"),
+    path('view_candidate/<str:id>',views.view_candidate,name="view_candidate"),
+    path('addclasspolling/',views.addclasspolling,name="addclasspolling"),
+    path('vote/<str:id>',views.vote,name="vote"),
+    path('viewresult/',views.viewresult,name="viewresult"),
 ]

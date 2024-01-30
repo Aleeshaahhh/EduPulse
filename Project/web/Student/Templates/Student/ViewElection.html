@@ -24,7 +24,12 @@
             <td>{{i.elect.election_date}}</td>
             <td>{{i.elect.election_for_date}}</td>
             <td>{{i.elect.election_details}}</td>
-            <td><a href="{% url 'webstudent:apply_election' i.id %}">Apply</a>
+            <td>
+                {% if flage > 0 %}
+                Already applyed | <a href="{% url 'webstudent:view_candidate' i.id %}">view Candidates</a>
+                {% else %}
+                <a href="{% url 'webstudent:apply_election' i.id %}">Apply</a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

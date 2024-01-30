@@ -10,7 +10,7 @@ db = firestore.client()
 
 # Create your views here.
 def NewStudent(request):
-    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("student_status", "==", 0).stream()
+    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("year_id", "==", request.session["tr_yr"]).where("student_status", "==", 0).stream()
     stdnt_data=[]
     for i in st:
         stdata=i.to_dict()
@@ -22,7 +22,7 @@ def NewStudent(request):
     return render(request,"Teacher/NewStudent.html",{"student":stdnt_data})
 
 def rejected_student(request):
-    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("student_status", "==", 2).stream()
+    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("year_id", "==", request.session["tr_yr"]).where("student_status", "==", 2).stream()
     stdnt_data=[]
     for i in st:
         stdata=i.to_dict()
@@ -34,7 +34,7 @@ def rejected_student(request):
     return render(request,"Teacher/Rejected_students.html",{"student":stdnt_data})
 
 def accepted_student(request):
-    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("student_status", "==", 1).stream()
+    st=db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("year_id", "==", request.session["tr_yr"]).where("student_status", "==", 1).stream()
     stdnt_data=[]
     for i in st:
         stdata=i.to_dict()
@@ -45,14 +45,16 @@ def accepted_student(request):
         stdnt_data.append(stdntdata)
     return render(request,"Teacher/Accepted_students.html",{"student":stdnt_data})
 
-def Approved_class_candidate(request):
-    candidate = db.collection("tbl_election").stream()
+def Approved_class_candidate(request):##
+    candidate = db.collection("tbl_class_candidate").where("candidate_status", "==", 1).stream()
     candidate_data =[]
     for i in candidate:
         candidatedata = i.to_dict()
-        cdata={"candidate":candidatedata,"id":i.id}
+        election = db.collection("tbl_election").document(candidatedata["election_id"]).get().to_dict()
+        student = db.collection("tbl_studentregister").document(candidatedata["student_id"]).get().to_dict()
+        cdata = {"candidate":candidatedata,"id":i.id,"election":election,"student":student}
         candidate_data.append(cdata)
-    return render(request,"Teacher/Approved_class_candidate.html",{"candidatedata":candidate_data})
+    return render(request,"Teacher/Approved_class_candidate.html",{"candidate":candidate_data})
         
 def Rejected_class_candidate(request):
     candidate = db.collection("tbl_election").stream()
@@ -114,7 +116,7 @@ def Class_Polling(request):
         polling_data.append(pdata)
     return render(request,"teacher/View_Classpolling.html",{"pollingdata":polling_data})
 def class_candidate(request):
-    candidate = db.collection("tbl_class_candidate").stream()
+    candidate = db.collection("tbl_class_candidate").where("candidate_status", "==", 0).stream()
     candidate_data =[]
     for i in candidate:
         candidatedata = i.to_dict()
@@ -201,5 +203,23 @@ def Feedback(request):
 def HomePage(request):
     return render(request,"Teacher/Homepage.html")
 
+def accept_class_candidate(request,id):
+    class_can = db.collection("tbl_class_candidate").document(id).update({"candidate_status":1})
+    return redirect("webteacher:ViewClasscandidate")
 
+def reject_class_candidate(request,id):
+    class_can = db.collection("tbl_class_candidate").document(id).update({"candidate_status":2})
+    return redirect("webteacher:ViewClasscandidate")
 
+def verifivote(request):
+    student = db.collection("tbl_studentregister").where("course_id", "==", request.session["tr_co"]).where("year_id", "==", request.session["tr_yr"]).stream()
+    vote_data = []
+    for s in student:
+        vote = db.collection("tbl_classpolling").where("student_id", "==", s.id).where("polling_status", "==", 0).stream()
+        for v in vote:
+            vote_data.append({"studentvote":v.to_dict(),"id":v.id,"student":s.to_dict()})
+    return render(request,"Teacher/Verifi_votes.html",{"vote":vote_data})
+
+def verifing(request,id):
+    db.collection("tbl_classpolling").document(id).update({"polling_status":1})
+    return redirect("webteacher:verifivote")

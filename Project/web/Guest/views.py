@@ -24,7 +24,7 @@ authe = firebase.auth()
 # Create your views here.
 def Login(request):
     st_id = "" 
-    tr_id = teacher_course = ""
+    tr_id = teacher_course = adminid = teacher_year = ""
     if request.method=="POST":
         Email=request.POST.get("txt_email")
         Password=request.POST.get("txt_password")
@@ -34,6 +34,9 @@ def Login(request):
         except:
             return render(request,"Guest/Login.html",{"msg":"Error In Email Or Password.."})
         data_id = data["localId"]
+        admin = db.collection("tbl_admin").where("admin_id", "==", data_id).stream()
+        for a in admin:
+            adminid = a.id
         student = db.collection("tbl_studentregister").where("Student_id", "==", data_id).where("student_status", "==", 1).stream()
         for s in student:
             st_id = s.id
@@ -42,13 +45,18 @@ def Login(request):
             tr_id= t.id
             teacher_data = t.to_dict()
             teacher_course = teacher_data["course_id"]
+            teacher_year = teacher_data["year_id"]
         if st_id:
             request.session["stid"] = st_id
             return redirect("webstudent:Homepage")
         elif tr_id:
             request.session["tr_id"]=tr_id
             request.session["tr_co"] = teacher_course
+            request.session["tr_yr"] = teacher_year
             return redirect("webteacher:Homepage")
+        elif adminid:
+            request.session["aid"] = adminid
+            return redirect("webadmin:Homepage")
         else:
             return render(request,"Guest/Login.html",{"msg":"Error"})
     else:
@@ -69,7 +77,7 @@ def Student_Register(request):
         yr_data.append(ydata)
     if request.method=="POST":
         Email=request.POST.get("txt_email")
-        Password=request.POST.get("txt_password")
+        Password=request.POST.get("txt_pass")
         Proof=request.FILES.get("txt_proof")
 
         try:
@@ -86,7 +94,7 @@ def Student_Register(request):
             path = "Student_Photo/" + Photo.name
             st.child(path).put(Photo)
             d_url = st.child(path).get_url(None)
-        data = {"Student_id":Student_Register.uid,"Student_name":request.POST.get("txt_name"),"Student_email":Email,"Student_contact":request.POST.get("txt_contact"),"Student_proof":dwnld_url,"Student_photo":d_url,"course_id":request.POST.get("sel_course"),"year_id":request.POST.get("year"),"Student_address":request.POST.get("txt_address"),"Student_admissionno":request.POST.get("txt_admino"),"Student_gender":request.POST.get("txt_gender"),"student_status":0}
+        data = {"Student_id":Student_Register.uid,"Student_name":request.POST.get("txt_name"),"Student_email":Email,"Student_contact":request.POST.get("txt_contact"),"Student_proof":dwnld_url,"Student_photo":d_url,"course_id":request.POST.get("sel_course"),"year_id":request.POST.get("year"),"Student_address":request.POST.get("txt_address"),"Student_admissionno":request.POST.get("txt_admino"),"Student_gender":request.POST.get("rdo_gender"),"student_status":0}
         db.collection("tbl_studentregister").add(data)
         return render(request,"Guest/Student_Register.html",{"msg":"Account Created.."})
     else:

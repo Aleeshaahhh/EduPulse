@@ -7,18 +7,26 @@
 </head>
 <body>
         
-        <table border="1"align="center">
+        <table border="1"align="center" cellpadding="10">
             <tr>
                 <td>#</td>
                 <td>Candidate</td>
+                <td>Course</td>
+                <td>Year</td>
                 <td>Count</td>
             </tr>
-            {% for i in result %}
+            {% for i in candidate %}
             <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{i.result.Student_name}}</td>>
-                <td>{{i.result.count}}</td>
+                <td>{{i.student.Student_name}}</td>
+                <td>{{i.course.course_name}}</td>
+                <td>{{i.year.year_name}}</td>
+                <td>{{i.count}}</td>
             </tr>
             {% endfor %}
+            <tr>
+                <td colspan="5" align="right"><a href="{% url 'webadmin:publish_classres' %}">Publish Result</a></td>
+            </tr>
+        </table>
 </body>
 </html>

@@ -19,6 +19,7 @@
             <td>Election</td>
             <td>Submission Date</td>
             <td>Gender</td>
+            <td>Action</td>
         </tr>
         {% for i in candidate %}
         <tr>
@@ -28,6 +29,10 @@
             <td>{{i.election.election_details}}</td>
             <td>{{i.candidate.submission_date}}</td>
             <td>{{i.candidate.gender}}</td>
+            <td>
+                <a href="{% url 'webteacher:accept_class_candidate' i.id %}">Approve</a>
+                <a href="{% url 'webteacher:reject_class_candidate' i.id %}">Reject</a>
+            </td>
               
         </tr>
         {% endfor %}

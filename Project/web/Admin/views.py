@@ -128,7 +128,7 @@ def Election(request):
     if request.method=="POST":
         ElectionDate=request.POST.get("txt_electdate")
         ElectionDetails=request.POST.get("txt_electdetails")
-        data = {"election_for_date":ElectionDate,"election_details":ElectionDetails,"election_date":str(date.today()),"election_nomination_ldate":request.POST.get("txt_nldate"),"election_nomination_cdate":request.POST.get("txt_ncdate")}
+        data = {"election_for_date":ElectionDate,"election_details":ElectionDetails,"election_date":str(date.today()),"election_nomination_ldate":request.POST.get("txt_nldate"),"election_nomination_cdate":request.POST.get("txt_ncdate"),"election_status":0}
         db.collection("tbl_election").add(data)
         return render(request,"Admin/Election.html",{'ElectionDate':ElectionDate,'ElectionDetails':ElectionDetails})
     else:
@@ -139,15 +139,12 @@ def delete_election(request,id):
     return redirect("webadmin:Election")
 
 def edit_election(request,id):
-    election = db.collection("tbl_election").document(id).get().to_dict()
-    if request.method == "POST":
-        ElectionDate=request.POST.get("txt_electdate")
-        ElectionDetails=request.POST.get("txt_electdetails")
-        data = {"election_date":ElectionDate,"election_details":ElectionDetails}
-        db.collection("tbl_election").document(id).update(data)
-        return redirect("webadmin:Election")
-    else:
-        return render(request,"Admin/Election.html",{"election":election})
+    db.collection("tbl_election").document(id).update({"election_status":1})
+    return redirect("webadmin:Election")
+
+def deactive(request,id):
+    db.collection("tbl_election").document(id).update({"election_status":0})
+    return redirect("webadmin:Election")
 
 def Teacher(request):
     tr=db.collection("tbl_teacher").stream()
@@ -190,6 +187,19 @@ def Teacher(request):
         return render(request,"Admin/Teacher.html",{"msg":"Account Created.."})
     else:
         return render(request,"Admin/Teacher.html",{"depdata":dep_data,"yrdata":yr_data,"tchrdata":tchr_data})
+
+def ajaxteacher(request):
+    msg = ""
+    if (request.GET.get("cid") !="") and (request.GET.get("yid") !=""):
+        teacher = db.collection("tbl_teacher").where("course_id", "==", request.GET.get("cid")).where("year_id", "==", request.GET.get("yid")).stream()
+        flag = 0
+        for t in teacher:
+            flag = flag + 1
+        if flag > 0:
+            msg = "Teacher Already Assign"
+        return render(request,"Admin/AjaxTeacher.html",{"msg":msg})
+    else:
+        return render(request,"Admin/AjaxTeacher.html",{"msg":msg})
 
 def delete_student(request,id):
     db.collection("tbl_teacher").document(id).delete()
@@ -237,13 +247,26 @@ def RepliedTeacherComplaint(request):
     return render(request,"Admin/View_RepliedTeacherComplaint.html",{"replydata":reply_data})
 
 def Classelection_Result(request):
-    result = db.collection("tbl_class_polling").stream()
-    result_data =[]
-    for i in result:
-        resultdata = i.to_dict()
-        rdata={"result":resultdata,"id":i.id}
-        result_data.append(rdata)
-    return render(request,"Admin/View_Classelection_Result.html",{"resultdata":result_data})
+    candidate = db.collection("tbl_class_candidate").where("candidate_status", ">=", 1).stream()
+    can_data = []
+    for c in candidate:
+        pocount = 0
+        can = c.to_dict()
+        student = db.collection("tbl_studentregister").document(can["student_id"]).get().to_dict()
+        year = db.collection("tbl_year").document(student["year_id"]).get().to_dict()
+        course = db.collection("tbl_course").document(student["course_id"]).get().to_dict()
+        polling = db.collection("tbl_classpolling").where("candidate_id", "==",c.id).where("polling_status", "==", 1).stream()
+        for po in polling:
+            pocount = pocount + 1
+        can_data.append({"candidate":c.to_dict(),"id":c.id,"student":student,"count":pocount,"year":year,"course":course})
+    return render(request,"Admin/View_Classelection_Result.html",{"candidate":can_data})
+
+def publish_classres(request):
+    can = db.collection("tbl_class_candidate").where("candidate_status", "==", 1).stream()
+    for c in can:
+        db.collection("tbl_class_candidate").document(c.id).update({"candidate_status":2})
+    return redirect("webadmin:View_Classelection_Result")
+
 def Collegeelection_Result(request):
     result = db.collection("tbl_college_polling").stream()
     result_data =[]
@@ -290,4 +313,4 @@ def ajaxcourse(request):
         course_data.append({"course":i.to_dict(),"id":i.id})
     return render(request,"Admin/AjaxCourse.html",{"course":course_data})      
 def HomePage(request):
-    return render(request,"Student/Homepage.html")  
+    return render(request,"Admin/Homepage.html")  
