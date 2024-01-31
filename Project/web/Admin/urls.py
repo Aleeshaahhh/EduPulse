@@ -32,4 +32,5 @@ urlpatterns = [
       path('deactive/<str:id>',views.deactive,name="deactive"),
       path('ajaxteacher/',views.ajaxteacher,name="ajaxteacher"),
       path('publish_classres/',views.publish_classres,name="publish_classres"),
+      path('logout/',views.logout,name="logout"),
 ]

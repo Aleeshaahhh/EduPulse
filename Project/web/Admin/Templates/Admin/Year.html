@@ -1,3 +1,6 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +16,7 @@
         <table border="1" align="center">
             <tr>
                 <td>Year</td>
-            <td><input type="text"name="txt_year"placeholder="Enter Year" value="{{dept.department_name"}} required></td>
+            <td><input type="text"name="txt_year"placeholder="Enter Year" value="{{dept.department_name}}" required></td>
             </tr>
             <tr>
                 <td colspan="2"align="center">
@@ -40,3 +43,4 @@
         </table>
 </body>
 </html>
+{% endblock content %}

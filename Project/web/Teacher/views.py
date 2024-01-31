@@ -160,7 +160,7 @@ def changepass(request):
         settings.EMAIL_HOST_USER,
         [email],
     )
-    return redirect("webstudent:Homepage")
+    return redirect("webteacher:Homepage")
 
 def Complaint(request):
     complaint = db.collection("tbl_complaint").stream()

@@ -72,7 +72,13 @@ def Admin_registration(request):
         Name=request.POST.get("txt_name")
         Email=request.POST.get("txt_email")
         Password=request.POST.get("txt_password")
-        return render(request,"Admin/Admin_registration.html",{'Name':Name,'Email':Email,'Password':Password})
+
+        try:
+            admin = firebase_admin.auth.create_user(email=Email,password=Password)
+        except (firebase_admin._auth_utils.EmailAlreadyExistsError,ValueError) as error:
+            return render(request,"Admin/Admin_registration.html",{"msg":error})
+        db.collection("tbl_admin").add({"admin_name":Name,"admin_email":Email,"admin_id":admin.uid})
+        return render(request,"Admin/Admin_registration.html",{"msg":"Account Created.."})
     else:
         return render(request,"Admin/Admin_registration.html")
 def Course(request):
@@ -314,3 +320,7 @@ def ajaxcourse(request):
     return render(request,"Admin/AjaxCourse.html",{"course":course_data})      
 def HomePage(request):
     return render(request,"Admin/Homepage.html")  
+
+def logout(request):
+    del request.session["aid"]
+    return redirect("webguest:Login")

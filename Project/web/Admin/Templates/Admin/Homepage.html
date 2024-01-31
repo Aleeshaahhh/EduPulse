@@ -1,3 +1,6 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,15 +9,16 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{% url 'webadmin:Admin_registration' %}">Admin Resgistration</a>
+    <!-- <a href="{% url 'webadmin:Admin_registration' %}">Admin Resgistration</a>
     <a href="{% url 'webadmin:Assign_ElectionTeacher' %}">Assign Election Teacher</a>
-    <a href="{% url 'webadmin:Course' %}">Course</a>
-    <a href="{% url 'webadmin:Department' %}">Department</a>
-    <a href="{% url 'webadmin:Election' %}">Election</a>
-    <a href="{% url 'webadmin:Teacher' %}">Teacher</a>
-    <a href="{% url 'webadmin:View_Classelection_Result' %}">Class Election Result</a>
+    <a href="">Course</a>
+    <a href="">Department</a>
+    <a href="">Election</a>
+    <a href="">Teacher</a>
+    <a href="">Class Election Result</a>
     <a href="{% url 'webadmin:View_Collegeelection_Result' %}">College Election Result</a>
-    <a href="{% url 'webadmin:Year' %}">Year</a>
-    <a href="{% url 'webadmin:View_Classelection_Result' %}">Class Result</a>
+    <a href="">Year</a>
+    <a href="{% url 'webadmin:View_Classelection_Result' %}">Class Result</a> -->
 </body>
 </html>
+{% endblock content %}

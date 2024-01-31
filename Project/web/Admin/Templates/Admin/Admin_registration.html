@@ -1,3 +1,6 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +31,12 @@
                </tr>
             </table>
         </form>
-       
+       {% if msg %}
+       <script>
+        alert("{{msg}}")
+        window.location = "{% url 'webadmin:Admin_registration' %}"
+       </script>
+       {% endif %}
 </body>
 </html>
 <script>
@@ -42,3 +50,4 @@
       return true; // Allow form submission
     }
       </script>
+{% endblock content %}
