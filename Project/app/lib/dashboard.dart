@@ -78,13 +78,14 @@ class _DashboardState extends State<Dashboard> {
               Center(
                   child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Hello,',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                   Text(
                     name,
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 28, fontWeight: FontWeight.w600),
                   )
                 ],
               )),
@@ -136,7 +137,7 @@ class _DashboardState extends State<Dashboard> {
                   width: 100,
                   child: const Center(
                       child: Text(
-                    'VIEW CANDIDATE',
+                    'ELECTION',
                     style: TextStyle(
                         fontSize: 30,
                         fontStyle: FontStyle.italic,

@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:edupulse/my_profile.dart';
+import 'package:flutter/material.dart';
 
-class viewcandidate extends StatefulWidget {
-  const viewcandidate({Key? key}) : super(key: key);
+class ViewCandidate extends StatefulWidget {
+  final String id;
+  const ViewCandidate({super.key, required this.id});
 
   @override
-  State<viewcandidate> createState() => _viewcandidateState();
+  State<ViewCandidate> createState() => _ViewCandidateState();
 }
 
-class _viewcandidateState extends State<viewcandidate> {
+class _ViewCandidateState extends State<ViewCandidate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,14 +42,17 @@ class _viewcandidateState extends State<viewcandidate> {
               ),
               child: Row(
                 children: [
-                  Image.asset("assets/candidate1.jpg", width: 120, height: 150, fit: BoxFit.cover),
+                  Image.asset("assets/candidate1.jpg",
+                      width: 120, height: 150, fit: BoxFit.cover),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
                   Column(
                     children: [
-                      Text('Candidate Name',),
+                      Text(
+                        'Candidate Name',
+                      ),
                       const SizedBox(
                         width: 20,
                       ),
@@ -65,18 +69,19 @@ class _viewcandidateState extends State<viewcandidate> {
               ),
             ),
             const SizedBox(
-                    height: 20,
-                  ),
+              height: 20,
+            ),
             Container(
               padding: const EdgeInsets.all(20.0),
               width: 500,
               decoration: BoxDecoration(
-                color:Colors.lightBlueAccent,
+                color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Row(
                 children: [
-                  Image.asset("assets/candidate2.jpg", width: 120, height: 150, fit: BoxFit.cover),
+                  Image.asset("assets/candidate2.jpg",
+                      width: 120, height: 150, fit: BoxFit.cover),
                   const SizedBox(
                     height: 20,
                     width: 20,
